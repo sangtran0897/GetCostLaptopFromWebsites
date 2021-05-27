@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="laptop_cost" Class="databaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-K26N63K;Initial Catalog=laptop_cost;Integrated Security=True" SettingsObjectName="GetCostLaptopFromWebsites.Properties.Settings" SettingsPropertyName="laptop_costConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.configure" Member="configures">
+    <Type Name="configure">
+      <Column Name="property" Type="System.String" DbType="NVarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="value" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Website" Member="Websites">
+    <Type Name="Website">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WebSiteName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Modified_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Website_SourceWebsite" Member="SourceWebsites" ThisKey="Id" OtherKey="WebsiteId" Type="SourceWebsite" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Laptop_info" Member="Laptop_infos">
+    <Type Name="Laptop_info">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SourceWebsiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Modified_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Laptop_info_Laptop_info_hist" Member="Laptop_info_hists" ThisKey="Id" OtherKey="Id" Type="Laptop_info_hist" />
+      <Association Name="SourceWebsite_Laptop_info" Member="SourceWebsite" ThisKey="SourceWebsiteId" OtherKey="Id" Type="SourceWebsite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Laptop_info_hist" Member="Laptop_info_hists">
+    <Type Name="Laptop_info_hist">
+      <Column Name="KeyId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SourceWebsiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Modified_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Laptop_info_Laptop_info_hist" Member="Laptop_info" ThisKey="Id" OtherKey="Id" Type="Laptop_info" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SourceWebsite" Member="SourceWebsites">
+    <Type Name="SourceWebsite">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Link" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ShopName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="LaptopName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="WebsiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Created_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Modified_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="SourceWebsite_Laptop_info" Member="Laptop_infos" ThisKey="Id" OtherKey="SourceWebsiteId" Type="Laptop_info" />
+      <Association Name="Website_SourceWebsite" Member="Website" ThisKey="WebsiteId" OtherKey="Id" Type="Website" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
